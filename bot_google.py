@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen, Request
+from urllib2.request import urlopen, Request
         
 def main():
     page = get_page("https://www.google.com/search?ei=hKE8XZ3qD6iCjLsP84qcwA0&q=hypnotherapeute+paris&oq=hypotherapeute+&gs_l=psy-ab.3.0.35i304i39j0i13l9.1549.3659..5051...0.0..0.94.435.7......0....1..gws-wiz.......35i39j0i10i203j0i10j35i305i39.TzPyd8p5fXg")
@@ -26,22 +26,26 @@ def find_link(html):
     scraping_page(websites, 0)
 
 def scraping_page(websites, index):
-    tab = [["Liens"], ["Numeros"], ["Adresse mail"], ["Nom"], ["prenom"]]
+    #tab = [["Liens"], ["Numeros"], ["Adresse mail"], ["Nom"], ["prenom"]]
+    tab = [[]] * 5
+    a = 1
     if websites[index] != None:
         page = get_page(websites[index])
         #if websites[index].count('doctilib')
         #    programme(page)
         #    scraping_page(websites, index + 1)
-        link = page.find_all('a')
-        for url in link:
+        liste = page.find_all('li')
+        for url in liste:
             liens = url.get("href")
-            if liens is not None and liens.count('contact') and liens.count('A propos'):
-                data_collect(lien, tab)
+            #if liens is not None and liens.count('Contact') and liens.count('A propos'):
+            # page = get_page(lien)
+            # data_collect(page, websites[index], tab)
+            #    a += 1
         scraping_page(websites, index + 1)
 
-def data_collect(lien, tab):
-    tab[0].append()  
-    tab[1].append() 
+def data_collect(page, website, tab):
+    tab[0].append(website)  
+    tab[1].append()
     tab[2].append()  
     tab[3].append()
     tab[4].append() 
